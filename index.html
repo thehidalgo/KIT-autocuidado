@@ -32,26 +32,6 @@
         }
         .icono-mito-flotante { animation: iconoFlotar 2.6s ease-in-out infinite; display: inline-block; }
 
-        @keyframes botonPulso {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0.5); }
-            50% { box-shadow: 0 0 0 6px rgba(255,255,255,0); }
-        }
-        .boton-mito-pulso { animation: botonPulso 2s ease-in-out infinite; }
-
-        .boton-mito-elegido { background-color: #0fa1a1 !important; color: #ffffff !important; transform: scale(0.95); }
-
-        @keyframes iconoRebote {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.3) rotate(10deg); }
-        }
-        .icono-mito-rebote { animation: iconoRebote 0.4s ease-in-out; }
-
-        @keyframes tarjetaEntra {
-            0% { opacity: 0; transform: translateY(12px) scale(0.96); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-        }
-        .tarjeta-revelada { animation: tarjetaEntra 0.35s ease-out; }
-
         @keyframes walkLegL { 0%, 100% { transform: rotate(-20deg); } 50% { transform: rotate(20deg); } }
         @keyframes walkLegR { 0%, 100% { transform: rotate(20deg); } 50% { transform: rotate(-20deg); } }
         .walk-leg-l { animation: walkLegL 0.7s ease-in-out infinite; }
@@ -180,7 +160,7 @@
                 <div class="space-y-3 my-auto py-6">
                     <button onclick="goToScreen('screen-modulo-emocional')" class="w-full bg-tvn-blue text-white active:scale-[0.97] p-4 rounded-2xl text-left shadow-md flex items-center justify-between group transition-all">
                         <span>
-                            <span class="block font-poppins font-bold text-base">🧠 Comprender el estrés y el bienestar emocional</span>
+                            <span class="block font-poppins font-bold text-base"> Comprender el estrés y el bienestar emocional</span>
                             <span class="block text-[12.5px] text-white/80 font-lato mt-0.5">Conoce qué es el estrés, cómo puede manifestarse y aprende a reconocer señales que muchas veces pasan desapercibidas.</span>
                         </span>
                         <i class="fa-solid fa-arrow-right text-white/70 group-hover:translate-x-1 transition-all shrink-0 ml-2"></i>
@@ -188,7 +168,7 @@
 
                     <button onclick="goToScreen('screen-modulo-habitos')" class="w-full bg-tvn-teal text-white active:scale-[0.97] p-4 rounded-2xl text-left shadow-md flex items-center justify-between group transition-all">
                         <span>
-                            <span class="block font-poppins font-bold text-base">🌱 Bienestar en tu día a día</span>
+                            <span class="block font-poppins font-bold text-base"> Bienestar en tu día a día</span>
                             <span class="block text-[12.5px] text-white/80 font-lato mt-0.5">Descubre cómo el descanso, el sueño y los momentos de desconexión pueden influir en tu bienestar físico y emocional.</span>
                         </span>
                         <i class="fa-solid fa-arrow-right text-white/70 group-hover:translate-x-1 transition-all shrink-0 ml-2"></i>
@@ -196,7 +176,7 @@
 
                     <button onclick="goToScreen('screen-modulo-acciones')" class="w-full bg-tvn-blue text-white active:scale-[0.97] p-4 rounded-2xl text-left shadow-md flex items-center justify-between group transition-all">
                         <span>
-                            <span class="block font-poppins font-bold text-base">✨ Ideas para cuidarte día a día</span>
+                            <span class="block font-poppins font-bold text-base"> Ideas para cuidarte día a día</span>
                             <span class="block text-[12.5px] text-white/80 font-lato mt-0.5">Acciones sencillas para incorporar a tu rutina</span>
                         </span>
                         <i class="fa-solid fa-arrow-right text-white/70 group-hover:translate-x-1 transition-all shrink-0 ml-2"></i>
@@ -204,7 +184,7 @@
 
                     <button onclick="goToScreen('screen-modulo-explorar')" class="w-full bg-tvn-teal text-white active:scale-[0.97] p-4 rounded-2xl text-left shadow-md flex items-center justify-between group transition-all">
                         <span>
-                            <span class="block font-poppins font-bold text-base">🎧 Recursos recomendados</span>
+                            <span class="block font-poppins font-bold text-base"> Recursos recomendados</span>
                             <span class="block text-[12.5px] text-white/80 font-lato mt-0.5">Podcasts, libros, videos y otros recursos para seguir explorando temas relacionados con el bienestar y el autocuidado.</span>
                         </span>
                         <i class="fa-solid fa-arrow-right text-white/70 group-hover:translate-x-1 transition-all shrink-0 ml-2"></i>
@@ -223,16 +203,81 @@
             </div>
         </section>
 
-        <!-- TARJETA 1: Descubre tus hábitos de autocuidado -->
-        <section id="screen-modulo-habitos" class="screen flex-grow hidden flex flex-col p-6 pt-12 pb-8 bg-white text-tvn-dark z-10 bg-waves overflow-hidden">
+        <!-- SECCIÓN 2: Bienestar en tu día a día -->
+        <section id="screen-modulo-habitos" class="screen flex-grow hidden flex flex-col p-6 pt-10 pb-6 bg-white text-tvn-dark z-10 bg-waves overflow-hidden">
             <button onclick="goToScreen('screen-selection')" class="self-start text-sm font-semibold text-tvn-blue flex items-center gap-2 hover:underline py-2 shrink-0">
                 <i class="fa-solid fa-chevron-left"></i> Volver al menú
             </button>
-            <div id="habitos-content" class="flex-grow overflow-y-auto no-scrollbar mt-2">
-                <h3 class="text-xl font-poppins font-bold text-tvn-blue mb-2">Bienestar en tu día a día</h3>
-                <p class="text-sm text-tvn-muted leading-relaxed">
-                    Identificar tus rutinas actuales te permite realizar pequeños ajustes sostenibles para mejorar tu descanso y nivel de energía cotidiana.
-                </p>
+
+            <div class="flex-grow overflow-y-auto no-scrollbar mt-2 pr-1 space-y-5">
+                <!-- Pantalla Introductoria -->
+                <div class="space-y-2">
+                    <span class="inline-block bg-tvn-teal/10 text-tvn-teal font-poppins font-extrabold text-[11px] uppercase tracking-wider px-3 py-1 rounded-full">
+                        Sección 2
+                    </span>
+                    <h3 class="text-2xl font-poppins font-extrabold text-tvn-blue leading-snug">
+                        Bienestar en tu día a día
+                    </h3>
+                    <p class="text-sm text-tvn-muted leading-relaxed">
+                        No siempre necesitamos grandes cambios para cuidar nuestro bienestar. A veces, pequeñas acciones cotidianas pueden ayudarnos a recuperar energía, disminuir el ritmo y encontrar momentos de equilibrio durante el día.
+                    </p>
+                </div>
+
+                <!-- Tarjeta 1 -->
+                <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-4 shadow-sm space-y-3">
+                    <div class="flex items-start gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-tvn-teal/10 flex items-center justify-center text-tvn-teal shrink-0 mt-0.5">
+                            <i class="fa-solid fa-bed text-lg"></i>
+                        </div>
+                        <h4 class="font-poppins font-bold text-base text-tvn-blue leading-snug">
+                            ¿Siempre estamos descansando cuando creemos que descansamos?
+                        </h4>
+                    </div>
+
+                    <p class="text-xs text-tvn-muted leading-relaxed">
+                        Muchas veces utilizamos las pantallas para desconectarnos después de un día ocupado. Ver videos, revisar redes sociales o ver una serie puede ayudarnos a distraernos y relajarnos por un momento.
+                    </p>
+                    <p class="text-xs text-tvn-muted leading-relaxed">
+                        Sin embargo, existen otras formas de descanso que también pueden contribuir a recuperar energía física y mental.
+                    </p>
+
+                    <!-- Algunas alternativas -->
+                    <div class="pt-2 border-t border-slate-200/60">
+                        <span class="block font-poppins font-bold text-xs text-tvn-teal uppercase tracking-wide mb-2.5">
+                            Algunas alternativas
+                        </span>
+                        <ul class="space-y-2">
+                            <li class="flex items-center gap-2.5 text-xs text-tvn-dark font-medium bg-white p-2.5 rounded-xl border border-slate-100 shadow-2xs">
+                                <i class="fa-solid fa-music text-tvn-teal text-sm shrink-0"></i>
+                                <span>Escuchar música.</span>
+                            </li>
+                            <li class="flex items-center gap-2.5 text-xs text-tvn-dark font-medium bg-white p-2.5 rounded-xl border border-slate-100 shadow-2xs">
+                                <i class="fa-solid fa-shoe-prints text-tvn-teal text-sm shrink-0"></i>
+                                <span>Dar un paseo corto.</span>
+                            </li>
+                            <li class="flex items-center gap-2.5 text-xs text-tvn-dark font-medium bg-white p-2.5 rounded-xl border border-slate-100 shadow-2xs">
+                                <i class="fa-solid fa-book-open text-tvn-teal text-sm shrink-0"></i>
+                                <span>Leer algo que disfrutes.</span>
+                            </li>
+                            <li class="flex items-center gap-2.5 text-xs text-tvn-dark font-medium bg-white p-2.5 rounded-xl border border-slate-100 shadow-2xs">
+                                <i class="fa-solid fa-comments text-tvn-teal text-sm shrink-0"></i>
+                                <span>Conversar con alguien.</span>
+                            </li>
+                            <li class="flex items-center gap-2.5 text-xs text-tvn-dark font-medium bg-white p-2.5 rounded-xl border border-slate-100 shadow-2xs">
+                                <i class="fa-solid fa-volume-xmark text-tvn-teal text-sm shrink-0"></i>
+                                <span>Dedicar unos minutos al silencio.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Mensaje final -->
+                <div class="bg-tvn-teal/10 border border-tvn-teal/20 rounded-2xl p-4 text-center space-y-1">
+                    <span class="text-tvn-teal text-lg">✨</span>
+                    <p class="font-poppins font-bold text-xs text-tvn-blue leading-relaxed">
+                        Descansar no siempre significa hacer menos. A veces significa cambiar el tipo de actividad.
+                    </p>
+                </div>
             </div>
         </section>
 
