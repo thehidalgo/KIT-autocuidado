@@ -26,6 +26,37 @@
         @keyframes pulseSoft { 0%, 100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.06); opacity: 0.9; } }
         .pulse-soft { animation: pulseSoft 2.2s infinite ease-in-out; }
 
+        /* Tarjetas de Mito o Realidad: ícono grande flotando suavemente para llenar el espacio y dar vida */
+        @keyframes iconoFlotar {
+            0%, 100% { transform: translateY(0) rotate(-3deg); }
+            50% { transform: translateY(-10px) rotate(3deg); }
+        }
+        .icono-mito-flotante { animation: iconoFlotar 2.6s ease-in-out infinite; display: inline-block; }
+
+        /* Pulso sutil en los botones Mito/Realidad, invita a tocar */
+        @keyframes botonPulso {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0.5); }
+            50% { box-shadow: 0 0 0 6px rgba(255,255,255,0); }
+        }
+        .boton-mito-pulso { animation: botonPulso 2s ease-in-out infinite; }
+
+        /* Botón elegido se resalta antes de revelar la respuesta */
+        .boton-mito-elegido { background-color: #0fa1a1 !important; color: #ffffff !important; transform: scale(0.95); }
+
+        /* El ícono rebota al confirmar una respuesta */
+        @keyframes iconoRebote {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3) rotate(10deg); }
+        }
+        .icono-mito-rebote { animation: iconoRebote 0.4s ease-in-out; }
+
+        /* La respuesta entra con una pequeña animación */
+        @keyframes tarjetaEntra {
+            0% { opacity: 0; transform: translateY(12px) scale(0.96); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .tarjeta-revelada { animation: tarjetaEntra 0.35s ease-out; }
+
         @keyframes walkLegL { 0%, 100% { transform: rotate(-20deg); } 50% { transform: rotate(20deg); } }
         @keyframes walkLegR { 0%, 100% { transform: rotate(20deg); } 50% { transform: rotate(-20deg); } }
         .walk-leg-l { animation: walkLegL 0.7s ease-in-out infinite; }
@@ -143,52 +174,56 @@
         </section>
 
         <!-- PANTALLA 3: SELECCIÓN DE RUTAS -->
-        <section id="screen-selection" class="screen flex-grow hidden flex flex-col p-6 pt-8 pb-6 bg-teal-50 text-tvn-dark relative z-10 overflow-y-auto no-scrollbar">
-            <div>
-                <h3 class="text-xl font-poppins font-bold text-tvn-dark leading-snug">Explora tu bienestar</h3>
-                <p class="text-sm text-tvn-muted mt-2 leading-relaxed">
-                    Pequeñas herramientas y recursos para ayudarte a conocer tus hábitos, comprender mejor tu bienestar y descubrir nuevas formas de cuidarte.
-                </p>
-            </div>
+        <section id="screen-selection" class="screen flex-grow hidden flex flex-col bg-teal-50 text-tvn-dark relative z-10 overflow-hidden">
+            <div class="flex-grow overflow-y-auto no-scrollbar p-6 pt-8 pb-2 flex flex-col">
+                <div class="text-center shrink-0">
+                    <h3 class="text-2xl font-poppins font-extrabold text-tvn-dark leading-snug">Explora tu bienestar</h3>
+                    <div class="w-14 h-1 bg-tvn-teal mx-auto rounded-full mt-2 mb-3"></div>
+                    <p class="text-sm text-tvn-muted leading-relaxed px-2">
+                        Pequeñas herramientas y recursos para ayudarte a conocer tus hábitos, comprender mejor tu bienestar y descubrir nuevas formas de cuidarte.
+                    </p>
+                </div>
 
-            <div class="space-y-3 pt-5">
-                <button onclick="goToScreen('screen-modulo-habitos')" class="w-full bg-tvn-blue text-white active:scale-[0.97] p-4 rounded-2xl text-left shadow-md flex items-center justify-between group transition-all">
-                    <span>
-                        <span class="block font-poppins font-bold text-base">🌱 Hábitos que influyen en tu bienestar</span>
-                        <span class="block text-[12.5px] text-white/80 font-lato mt-0.5">Sueño, alimentación, movimiento y descanso</span>
-                    </span>
-                    <i class="fa-solid fa-arrow-right text-white/70 group-hover:translate-x-1 transition-all shrink-0 ml-2"></i>
-                </button>
+                <div class="space-y-3 my-auto py-6">
+                    <button onclick="goToScreen('screen-modulo-emocional')" class="w-full bg-tvn-blue text-white active:scale-[0.97] p-4 rounded-2xl text-left shadow-md flex items-center justify-between group transition-all">
+                        <span>
+                            <span class="block font-poppins font-bold text-base">🧠 Comprender el estrés y el bienestar emocional</span>
+                            <span class="block text-[12.5px] text-white/80 font-lato mt-0.5">Conoce qué es el estrés, cómo puede manifestarse y aprende a reconocer señales que muchas veces pasan desapercibidas.</span>
+                        </span>
+                        <i class="fa-solid fa-arrow-right text-white/70 group-hover:translate-x-1 transition-all shrink-0 ml-2"></i>
+                    </button>
 
-                <button onclick="goToScreen('screen-modulo-emocional')" class="w-full bg-tvn-teal text-white active:scale-[0.97] p-4 rounded-2xl text-left shadow-md flex items-center justify-between group transition-all">
-                    <span>
-                        <span class="block font-poppins font-bold text-base">🧠 Comprender el estrés y el bienestar emocional</span>
-                        <span class="block text-[12.5px] text-white/80 font-lato mt-0.5">Señales, mitos y aprendizaje práctico</span>
-                    </span>
-                    <i class="fa-solid fa-arrow-right text-white/70 group-hover:translate-x-1 transition-all shrink-0 ml-2"></i>
-                </button>
+                    <button onclick="goToScreen('screen-modulo-habitos')" class="w-full bg-tvn-teal text-white active:scale-[0.97] p-4 rounded-2xl text-left shadow-md flex items-center justify-between group transition-all">
+                        <span>
+                            <span class="block font-poppins font-bold text-base">🌱 Bienestar en tu día a día</span>
+                            <span class="block text-[12.5px] text-white/80 font-lato mt-0.5">Descubre cómo el descanso, el sueño y los momentos de desconexión pueden influir en tu bienestar físico y emocional.</span>
+                        </span>
+                        <i class="fa-solid fa-arrow-right text-white/70 group-hover:translate-x-1 transition-all shrink-0 ml-2"></i>
+                    </button>
 
-                <button onclick="goToScreen('screen-modulo-acciones')" class="w-full bg-tvn-blue text-white active:scale-[0.97] p-4 rounded-2xl text-left shadow-md flex items-center justify-between group transition-all">
-                    <span>
-                        <span class="block font-poppins font-bold text-base">✨ Ideas para cuidarte día a día</span>
-                        <span class="block text-[12.5px] text-white/80 font-lato mt-0.5">Acciones sencillas para incorporar a tu rutina</span>
-                    </span>
-                    <i class="fa-solid fa-arrow-right text-white/70 group-hover:translate-x-1 transition-all shrink-0 ml-2"></i>
-                </button>
+                    <button onclick="goToScreen('screen-modulo-acciones')" class="w-full bg-tvn-blue text-white active:scale-[0.97] p-4 rounded-2xl text-left shadow-md flex items-center justify-between group transition-all">
+                        <span>
+                            <span class="block font-poppins font-bold text-base">✨ Ideas para cuidarte día a día</span>
+                            <span class="block text-[12.5px] text-white/80 font-lato mt-0.5">Acciones sencillas para incorporar a tu rutina</span>
+                        </span>
+                        <i class="fa-solid fa-arrow-right text-white/70 group-hover:translate-x-1 transition-all shrink-0 ml-2"></i>
+                    </button>
 
-                <button onclick="goToScreen('screen-modulo-explorar')" class="w-full bg-tvn-teal text-white active:scale-[0.97] p-4 rounded-2xl text-left shadow-md flex items-center justify-between group transition-all">
-                    <span>
-                        <span class="block font-poppins font-bold text-base">🎧 Recursos recomendados</span>
-                        <span class="block text-[12.5px] text-white/80 font-lato mt-0.5">Podcasts, libros y contenido para seguir explorando</span>
-                    </span>
-                    <i class="fa-solid fa-arrow-right text-white/70 group-hover:translate-x-1 transition-all shrink-0 ml-2"></i>
-                </button>
-            </div>
+                    <button onclick="goToScreen('screen-modulo-explorar')" class="w-full bg-tvn-teal text-white active:scale-[0.97] p-4 rounded-2xl text-left shadow-md flex items-center justify-between group transition-all">
+                        <span>
+                            <span class="block font-poppins font-bold text-base">🎧 Recursos recomendados</span>
+                            <span class="block text-[12.5px] text-white/80 font-lato mt-0.5">Podcasts, libros, videos y otros recursos para seguir explorando temas relacionados con el bienestar y el autocuidado.</span>
+                        </span>
+                        <i class="fa-solid fa-arrow-right text-white/70 group-hover:translate-x-1 transition-all shrink-0 ml-2"></i>
+                    </button>
+                </div>
 
-            <div class="text-center mt-5 space-y-2">
-                <p class="text-[12px] text-tvn-muted">
+                <p class="text-[12px] text-tvn-muted text-center shrink-0">
                     Explora las secciones que más llamen tu atención y vuelve cuando quieras.
                 </p>
+            </div>
+
+            <div class="shrink-0 text-center py-3 border-t border-tvn-teal/10">
                 <p class="text-[11px] text-tvn-muted/70">
                     © TVN Media – Cuidarnos también es parte del trabajo
                 </p>
@@ -207,50 +242,26 @@
         </section>
 
         <!-- TARJETA 2: Comprende tu bienestar emocional -->
-        <section id="screen-modulo-emocional" class="screen flex-grow hidden flex flex-col p-6 pt-12 pb-8 bg-white text-tvn-dark z-10 bg-waves overflow-hidden">
+        <section id="screen-modulo-emocional" class="screen flex-grow hidden flex flex-col p-6 pt-12 pb-4 bg-white text-tvn-dark z-10 overflow-hidden">
             <button onclick="goToScreen('screen-selection')" class="self-start text-sm font-semibold text-tvn-blue flex items-center gap-2 hover:underline py-2 shrink-0">
                 <i class="fa-solid fa-chevron-left"></i> Volver al menú
             </button>
-            <div class="flex-grow overflow-y-auto no-scrollbar mt-2 space-y-4">
-                <div>
-                    <h3 class="text-xl font-poppins font-bold text-tvn-blue">Comprende tu bienestar emocional</h3>
-                    <p class="text-sm text-tvn-muted mt-1">Conocer cómo funciona nuestro cuerpo y nuestras emociones nos permite cuidarnos mejor.</p>
-                </div>
 
-                <div class="bg-slate-50 border border-slate-100 rounded-2xl p-4 space-y-3">
-                    <div>
-                        <h4 class="text-[13px] font-poppins font-extrabold text-tvn-teal uppercase tracking-wide">Qué es el estrés</h4>
-                        <p class="text-sm text-tvn-muted mt-1">Es una respuesta natural del cuerpo ante una exigencia o cambio. En dosis puntuales, puede ayudarnos a enfocarnos y responder a un reto.</p>
-                    </div>
-                    <div>
-                        <h4 class="text-[13px] font-poppins font-extrabold text-tvn-teal uppercase tracking-wide">Cómo puede manifestarse</h4>
-                        <p class="text-sm text-tvn-muted mt-1">Tensión muscular, cansancio, dificultad para concentrarte, o cambios en el ánimo o el sueño. Cada persona lo vive distinto.</p>
-                    </div>
-                    <div>
-                        <h4 class="text-[13px] font-poppins font-extrabold text-tvn-teal uppercase tracking-wide">Momentáneo vs. prolongado</h4>
-                        <p class="text-sm text-tvn-muted mt-1">El momentáneo aparece y se va con la situación que lo generó. El prolongado se mantiene en el tiempo, por eso conviene prestarle atención con más cuidado.</p>
-                    </div>
-                    <div>
-                        <h4 class="text-[13px] font-poppins font-extrabold text-tvn-teal uppercase tracking-wide">Señales a las que prestar atención</h4>
-                        <p class="text-sm text-tvn-muted mt-1"><strong class="text-tvn-dark">Físicas:</strong> tensión, fatiga, dolores de cabeza. <strong class="text-tvn-dark">Emocionales:</strong> irritabilidad, ansiedad, desánimo. <strong class="text-tvn-dark">Cognitivas:</strong> dificultad para concentrarte o decidir.</p>
-                    </div>
-                </div>
+            <div class="flex-grow relative flex items-center overflow-hidden mt-1">
+                <!-- Flecha izquierda -->
+                <button onclick="cambiarTarjetaEmocional(-1)" class="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-white shadow-md flex items-center justify-center text-tvn-blue active:scale-90 transition-all">
+                    <i class="fa-solid fa-chevron-left text-xs"></i>
+                </button>
 
-                <!-- Dinámica Mito / Realidad -->
-                <div class="bg-tvn-blue/5 border border-tvn-blue/15 rounded-2xl p-4 space-y-3">
-                    <h4 class="text-[13px] font-poppins font-extrabold text-tvn-blue uppercase tracking-wide flex items-center gap-1.5">
-                        <i class="fa-solid fa-circle-question"></i> Mito o realidad
-                    </h4>
-                    <p id="mito-frase" class="text-base font-poppins font-bold text-tvn-dark">"El estrés siempre es negativo."</p>
-                    <div id="mito-opciones" class="grid grid-cols-2 gap-3">
-                        <button onclick="responderMito('mito')" class="bg-white border border-slate-200 rounded-xl py-3 font-poppins font-bold text-tvn-blue shadow-sm active:scale-95 transition-all">Mito</button>
-                        <button onclick="responderMito('realidad')" class="bg-white border border-slate-200 rounded-xl py-3 font-poppins font-bold text-tvn-blue shadow-sm active:scale-95 transition-all">Realidad</button>
-                    </div>
-                    <div id="mito-resultado" class="hidden bg-white border border-tvn-teal/30 rounded-xl p-3">
-                        <p class="text-sm text-tvn-muted"><strong class="text-tvn-teal">Es un mito.</strong> El estrés es una respuesta natural del cuerpo. Puede ayudarnos a responder ante ciertos retos, pero reconocer cuándo necesitamos recuperar equilibrio también forma parte del autocuidado.</p>
-                    </div>
-                </div>
+                <div id="emocional-card-container" class="w-full h-full"></div>
+
+                <!-- Flecha derecha -->
+                <button onclick="cambiarTarjetaEmocional(1)" class="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-white shadow-md flex items-center justify-center text-tvn-blue active:scale-90 transition-all">
+                    <i class="fa-solid fa-chevron-right text-xs"></i>
+                </button>
             </div>
+
+            <div id="emocional-dots" class="flex justify-center gap-2 pt-3 shrink-0"></div>
         </section>
 
         <!-- TARJETA 3: Pequeñas acciones para cuidarte -->
@@ -740,11 +751,198 @@
             }
         };
 
-        // ===== TARJETA 2: dinámica Mito / Realidad =====
-        function responderMito(respuesta) {
-            document.getElementById('mito-opciones').classList.add('hidden');
-            document.getElementById('mito-resultado').classList.remove('hidden');
+        // ===== TARJETA "Comprende el estrés y el bienestar emocional": carrusel de tarjetas =====
+        // Dos formatos de tarjeta:
+        // - "simple": texto centrado sobre fondo de color sólido (Tarjeta 1)
+        // - "acordeon": encabezado de color + lista de elementos desplegables (Tarjeta 2)
+        // Cuando lleguen las siguientes tarjetas, solo se agregan aquí, al arreglo.
+        const emocionalCards = [
+            {
+                tipo: "simple",
+                titulo: "¿Qué es el estrés?",
+                contenido: "El estrés es una respuesta natural de nuestro cuerpo y mente ante situaciones que requieren adaptación o esfuerzo. No siempre es algo negativo. En ocasiones puede ayudarnos a reaccionar, concentrarnos o responder a desafíos. Reconocer cómo se manifiesta es una forma de cuidar nuestro bienestar.",
+                color: "teal"
+            },
+            {
+                tipo: "acordeon",
+                titulo: "El estrés puede manifestarse de distintas formas",
+                intro: "No siempre se presenta como preocupación o nerviosismo. También puede reflejarse en nuestra energía, concentración o estado de ánimo. Conocer estas señales puede ayudarnos a comprender mejor cómo nos sentimos.",
+                items: [
+                    { emoji: "😴", titulo: "Cansancio constante", contenido: "Sentirse cansado después de un día exigente es normal. Sin embargo, cuando la sensación de agotamiento aparece con frecuencia o persiste incluso después de descansar, puede ser una señal de que tu cuerpo o mente necesitan recuperar energía." },
+                    { emoji: "😠", titulo: "Irritabilidad", contenido: "A veces el estrés puede hacernos sentir más sensibles, impacientes o reactivos ante situaciones cotidianas. Lo que normalmente pasaría desapercibido puede generar frustración con mayor facilidad." },
+                    { emoji: "🧠", titulo: "Dificultad para concentrarse", contenido: "Cuando tenemos muchas demandas o preocupaciones, nuestra atención puede dispersarse más fácilmente. Algunas personas notan que les cuesta enfocarse, recordar información o mantener la concentración durante una tarea." }
+                ],
+                mensajeFinal: "Reconocer estas señales también es una forma de autocuidado.",
+                color: "coral"
+            },
+            {
+                tipo: "simple",
+                titulo: "Cuidarnos no significa hacerlo perfecto",
+                contenido: "El bienestar no consiste en sentirnos bien todo el tiempo. Tampoco en tener hábitos perfectos. Se trata de reconocer nuestras necesidades, buscar equilibrio y realizar pequeñas acciones que contribuyan a nuestro bienestar.",
+                mensajeFinal: "Pequeños cambios también pueden marcar una diferencia.",
+                color: "azul"
+            },
+            {
+                tipo: "mito",
+                titulo: "Mito o realidad",
+                frase: "\"El estrés siempre es negativo.\"",
+                respuesta: "El estrés es una respuesta natural que puede ayudarnos a enfrentar desafíos. Lo importante es reconocer cuándo necesitamos recuperar equilibrio y descanso.",
+                icono: "😣",
+                color: "teal"
+            },
+            {
+                tipo: "mito",
+                titulo: "Mito o realidad",
+                frase: "\"Sentirse cansado siempre significa que necesito dormir más.\"",
+                respuesta: "El descanso es importante, pero nuestro bienestar también puede verse influido por otros factores como la actividad física, los momentos de desconexión, las emociones y los hábitos diarios.",
+                icono: "😴",
+                color: "coral"
+            },
+            {
+                tipo: "mito",
+                titulo: "Mito o realidad",
+                frase: "\"Cuidar de mí mismo es un lujo, no una necesidad.\"",
+                respuesta: "El autocuidado es parte de nuestro bienestar diario, no un privilegio ocasional. Dedicar tiempo a nosotros mismos nos ayuda a sostenernos mejor en el día a día.",
+                icono: "🌱",
+                color: "azul"
+            },
+            {
+                tipo: "mito",
+                titulo: "Mito o realidad",
+                frase: "\"Tomarme una pausa significa que soy menos productivo.\"",
+                respuesta: "Las pausas ayudan a que la mente y el cuerpo se recuperen, lo que muchas veces mejora la concentración en vez de reducirla.",
+                icono: "⏸️",
+                color: "teal"
+            }
+        ];
+
+        let emocionalIndex = 0;
+
+        const emocionalColores = {
+            teal: { bg: "bg-tvn-teal", ring1: "bg-white/15", ring2: "bg-tvn-blue/20", suave: "bg-tvn-teal/10", borde: "border-tvn-teal/20" },
+            coral: { bg: "bg-tvn-coral", ring1: "bg-white/15", ring2: "bg-tvn-blueDark/15", suave: "bg-tvn-coral/10", borde: "border-tvn-coral/20" },
+            azul: { bg: "bg-tvn-blue", ring1: "bg-white/10", ring2: "bg-tvn-coral/15", suave: "bg-tvn-blue/10", borde: "border-tvn-blue/20" }
+        };
+
+        function renderEmocionalCard() {
+            const card = emocionalCards[emocionalIndex];
+            const colores = emocionalColores[card.color] || emocionalColores.teal;
+            const cont = document.getElementById('emocional-card-container');
+
+            if (card.tipo === 'acordeon') {
+                const itemsHtml = card.items.map((item, i) => `
+                    <div class="rounded-xl overflow-hidden bg-white shadow-sm border border-slate-100">
+                        <button onclick="toggleAcordeonEmocional(${i})" class="w-full flex items-center justify-between px-4 py-3.5 text-left active:bg-slate-50 transition-colors">
+                            <span class="font-poppins font-semibold text-sm text-tvn-dark">${item.emoji} ${item.titulo}</span>
+                            <span id="acordeon-icon-${i}" class="w-7 h-7 rounded-full ${colores.suave} flex items-center justify-center shrink-0 ml-2 transition-transform">
+                                <i class="fa-solid fa-chevron-down text-[11px]" style="color:${card.color === 'coral' ? '#ff7a60' : (card.color === 'azul' ? '#0c4cb4' : '#0fa1a1')}"></i>
+                            </span>
+                        </button>
+                        <div id="acordeon-content-${i}" class="hidden px-4 pb-3.5">
+                            <p class="text-[13.5px] text-tvn-muted leading-relaxed">${item.contenido}</p>
+                        </div>
+                    </div>
+                `).join('');
+
+                cont.innerHTML = `
+                    <div class="w-full h-full bg-white rounded-3xl shadow-lg overflow-hidden flex flex-col">
+                        <div class="relative shrink-0 px-6 pt-7 pb-5 overflow-hidden">
+                            <div class="absolute -top-10 -right-10 w-40 h-40 rounded-full ${colores.suave}"></div>
+                            <h4 class="relative z-10 text-xl font-poppins font-extrabold text-tvn-dark leading-snug">${card.titulo}</h4>
+                            <p class="relative z-10 text-[13.5px] text-tvn-muted leading-relaxed mt-2">${card.intro}</p>
+                        </div>
+                        <div class="flex-grow overflow-y-auto no-scrollbar px-5 pb-4 space-y-2">
+                            <div class="space-y-2">${itemsHtml}</div>
+                            <p class="text-[13px] text-tvn-dark font-semibold text-center pt-2">${card.mensajeFinal}</p>
+                        </div>
+                    </div>
+                `;
+            } else if (card.tipo === 'mito') {
+                cont.innerHTML = `
+                    <div class="w-full h-full ${colores.bg} rounded-3xl relative overflow-hidden flex flex-col justify-center px-7 py-8 shadow-lg">
+                        <div class="absolute -top-10 -right-10 w-36 h-36 rounded-full ${colores.ring1}"></div>
+                        <div class="absolute -bottom-14 -left-10 w-44 h-44 rounded-full ${colores.ring2}"></div>
+                        <div class="relative z-10 space-y-3 text-center">
+                            <h4 class="text-sm font-poppins font-extrabold text-white uppercase tracking-widest text-center flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-circle-question"></i> ${card.titulo}
+                            </h4>
+
+                            <div id="mito-icono" class="text-6xl icono-mito-flotante">${card.icono || '🤔'}</div>
+
+                            <p class="text-xl font-poppins font-bold text-white leading-snug px-2">${card.frase}</p>
+
+                            <div id="mito-opciones" class="grid grid-cols-2 gap-3 pt-1">
+                                <button onclick="responderMitoCarrusel('mito')" id="btn-mito" class="bg-white/95 hover:bg-white rounded-xl py-3.5 font-poppins font-bold text-tvn-dark shadow-md active:scale-90 transition-all boton-mito-pulso">Mito</button>
+                                <button onclick="responderMitoCarrusel('realidad')" id="btn-realidad" class="bg-white/95 hover:bg-white rounded-xl py-3.5 font-poppins font-bold text-tvn-dark shadow-md active:scale-90 transition-all boton-mito-pulso">Realidad</button>
+                            </div>
+
+                            <div id="mito-resultado" class="hidden">
+                                <div class="bg-white/95 rounded-xl p-4 flex gap-3 items-start text-left tarjeta-revelada">
+                                    <span class="text-2xl shrink-0">💡</span>
+                                    <p class="text-[13.5px] text-tvn-dark leading-relaxed">${card.respuesta}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                cont.innerHTML = `
+                    <div class="w-full h-full ${colores.bg} rounded-3xl relative overflow-hidden flex flex-col justify-center px-8 py-10 shadow-lg">
+                        <div class="absolute -top-10 -right-10 w-36 h-36 rounded-full ${colores.ring1}"></div>
+                        <div class="absolute -bottom-14 -left-10 w-44 h-44 rounded-full ${colores.ring2}"></div>
+                        <div class="relative z-10 text-center space-y-4">
+                            <h4 class="text-2xl font-poppins font-extrabold text-white leading-snug">${card.titulo}</h4>
+                            <p class="text-sm text-white/90 leading-relaxed">${card.contenido}</p>
+                            ${card.mensajeFinal ? `<div class="bg-white/15 rounded-xl px-4 py-3"><p class="text-sm font-poppins font-bold text-white">${card.mensajeFinal}</p></div>` : ''}
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Puntos indicadores
+            const dots = document.getElementById('emocional-dots');
+            dots.innerHTML = emocionalCards.map((_, i) =>
+                `<span class="w-2 h-2 rounded-full transition-all ${i === emocionalIndex ? 'bg-tvn-blue w-5' : 'bg-slate-200'}"></span>`
+            ).join('');
         }
+
+        function toggleAcordeonEmocional(i) {
+            const content = document.getElementById(`acordeon-content-${i}`);
+            const icon = document.getElementById(`acordeon-icon-${i}`);
+            content.classList.toggle('hidden');
+            icon.classList.toggle('rotate-180');
+        }
+
+        function responderMitoCarrusel(elegido) {
+            const btnMito = document.getElementById('btn-mito');
+            const btnRealidad = document.getElementById('btn-realidad');
+            const elegidoBtn = elegido === 'mito' ? btnMito : btnRealidad;
+            const icono = document.getElementById('mito-icono');
+
+            // Resaltar brevemente el botón elegido antes de revelar la respuesta
+            elegidoBtn.classList.add('boton-mito-elegido');
+            if (icono) icono.classList.add('icono-mito-rebote');
+
+            setTimeout(() => {
+                document.getElementById('mito-opciones').classList.add('hidden');
+                document.getElementById('mito-resultado').classList.remove('hidden');
+            }, 220);
+        }
+
+        function cambiarTarjetaEmocional(direccion) {
+            emocionalIndex = (emocionalIndex + direccion + emocionalCards.length) % emocionalCards.length;
+            renderEmocionalCard();
+        }
+
+        // Renderizar la primera tarjeta al entrar a esta pantalla
+        const origGoToScreen2 = goToScreen;
+        goToScreen = function(screenId) {
+            origGoToScreen2(screenId);
+            if (screenId === 'screen-modulo-emocional') {
+                emocionalIndex = 0;
+                renderEmocionalCard();
+            }
+        };
     </script>
 </body>
 </html>
