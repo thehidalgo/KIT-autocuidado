@@ -44,6 +44,18 @@
             .content-col { max-width: 36rem; }
         }
 
+        /* En celulares el texto se reduce para que las tarjetas quepan completas.
+           Se escala por altura disponible: entre menos alto, más pequeño. */
+        @media (max-width: 767px) {
+            html { font-size: 14px; }
+        }
+        @media (max-width: 767px) and (max-height: 800px) {
+            html { font-size: 13px; }
+        }
+        @media (max-width: 767px) and (max-height: 700px) {
+            html { font-size: 12px; }
+        }
+
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
@@ -168,6 +180,9 @@
                     <p class="text-lg text-tvn-muted leading-relaxed px-2">
                         Pequeñas herramientas y recursos para ayudarte a conocer tus hábitos, comprender mejor tu bienestar y descubrir nuevas formas de cuidarte.
                     </p>
+                    <p class="text-base font-poppins font-bold text-tvn-teal mt-5 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-hand-pointer"></i> Toca una sección para comenzar
+                    </p>
                 </div>
 
                 <div class="content-col space-y-4 my-auto py-8">
@@ -176,7 +191,9 @@
                             <span class="block font-poppins font-bold text-lg leading-snug">Comprender el estrés y el bienestar emocional</span>
                             <span class="block text-base text-white/80 font-lato mt-1.5 leading-relaxed">Conoce qué es el estrés, cómo puede manifestarse y aprende a reconocer señales que muchas veces pasan desapercibidas.</span>
                         </span>
-                        <i class="fa-solid fa-arrow-right text-white/70 group-hover:translate-x-1 transition-all shrink-0 ml-3"></i>
+                        <span class="w-11 h-11 rounded-full bg-white/20 flex items-center justify-center shrink-0 ml-3 group-hover:bg-white/30 transition-all">
+                            <i class="fa-solid fa-arrow-right text-white text-lg group-hover:translate-x-0.5 transition-all"></i>
+                        </span>
                     </button>
 
                     <button onclick="goToScreen('screen-modulo-habitos')" class="w-full bg-tvn-teal hover:bg-tvn-teal/90 text-white active:scale-[0.97] p-5 rounded-2xl text-left shadow-lg flex items-center justify-between group transition-all">
@@ -189,14 +206,8 @@
 
                 </div>
 
-                <div class="content-col shrink-0 pb-4">
-                    <button onclick="goToScreen('screen-evaluacion')" class="w-full bg-white hover:bg-slate-50 text-tvn-teal border-2 border-tvn-teal/30 active:scale-[0.97] py-4 px-5 rounded-2xl font-poppins font-bold text-base shadow-sm flex items-center justify-center gap-2 transition-all">
-                        <i class="fa-solid fa-comment-dots"></i> Cuéntanos tu experiencia
-                    </button>
-                </div>
-
                 <p class="content-col text-base text-tvn-muted text-center shrink-0">
-                    Explora las secciones que más llamen tu atención y vuelve cuando quieras.
+                    Puedes recorrerlas en el orden que quieras y volver cuando lo necesites.
                 </p>
             </div>
 
@@ -346,7 +357,7 @@
             {
                 tipo: "eleccion",
                 titulo: "Cada persona descansa distinto",
-                intro: "Lo que a alguien le ayuda a soltar tensión, a otra persona puede no funcionarle. Conocer qué te funciona a ti también es parte del autocuidado.",
+                intro: "Lo que a alguien le ayuda a soltar tensión, a otra persona puede no funcionarle.",
                 pregunta: "Cuando estás tenso, ¿qué te ayuda más?",
                 opciones: [
                     { texto: "Moverme", detalle: "Caminar, estirarme, cambiar de espacio", respuesta: "Descargar la tensión con movimiento le funciona a muchas personas. Reconocerlo es tener una herramienta a la mano." },
@@ -522,9 +533,9 @@
 
             } else if (card.tipo === 'mito') {
                 html = `
-                    <div class="w-full h-full ${c.bg} rounded-3xl relative overflow-hidden flex flex-col justify-center px-8 py-8 shadow-xl">
+                    <div class="w-full h-full ${c.bg} rounded-3xl relative overflow-hidden flex flex-col shadow-xl">
                         ${decor}
-                        <div class="relative z-10 space-y-5 text-center">
+                        <div class="relative z-10 flex-grow overflow-y-auto no-scrollbar flex flex-col justify-center px-7 py-8 space-y-5 text-center">
                             <h4 class="text-base font-poppins font-extrabold text-white uppercase tracking-widest flex items-center justify-center gap-2">
                                 <i class="fa-solid fa-circle-question"></i> ${card.titulo}
                             </h4>
@@ -580,9 +591,8 @@
                         ${decor}
                         <div class="relative z-10 flex-grow overflow-y-auto no-scrollbar space-y-5">
                             <h4 class="text-2xl font-poppins font-extrabold text-white leading-snug">${card.titulo}</h4>
-                            <p class="text-lg text-white/90 leading-relaxed">${card.intro}</p>
-                            <p class="text-xl font-poppins font-bold text-white leading-snug pt-1">${card.pregunta}</p>
-                            <p class="text-sm text-white/70 -mt-2">Toca la opción con la que más te identifiques</p>
+                            <p class="text-base text-white/90 leading-relaxed">${card.intro}</p>
+                            <p class="text-xl font-poppins font-bold text-white leading-snug">${card.pregunta}</p>
                             <div id="eleccion-ops" class="space-y-3">${ops}</div>
                             <div id="eleccion-resp" class="hidden">
                                 <div class="bg-white/95 rounded-2xl p-5 flex gap-3 items-start tarjeta-revelada">
@@ -604,13 +614,15 @@
                 const parrafos = card.contenido.split('\n\n').map(p =>
                     `<p class="text-xl text-white/95 leading-relaxed">${p}</p>`).join('');
                 html = `
-                    <div class="w-full h-full ${c.bg} rounded-3xl relative overflow-hidden flex flex-col justify-center px-9 py-10 shadow-xl">
+                    <div class="w-full h-full ${c.bg} rounded-3xl relative overflow-hidden flex flex-col shadow-xl">
                         ${decor}
-                        <div class="relative z-10 text-center space-y-6">
-                            <h4 class="text-3xl font-poppins font-extrabold text-white leading-tight">${card.titulo}</h4>
-                            <div class="w-14 h-1 bg-white/40 mx-auto rounded-full"></div>
-                            <div class="space-y-4">${parrafos}</div>
-                            ${card.mensajeFinal ? `<div class="bg-white/15 rounded-2xl px-5 py-4 mt-2"><p class="text-lg font-poppins font-bold text-white leading-snug">${card.mensajeFinal}</p></div>` : ''}
+                        <div class="relative z-10 flex-grow overflow-y-auto no-scrollbar flex flex-col justify-center px-8 py-8">
+                            <div class="text-center space-y-5">
+                                <h4 class="text-2xl font-poppins font-extrabold text-white leading-tight">${card.titulo}</h4>
+                                <div class="w-14 h-1 bg-white/40 mx-auto rounded-full"></div>
+                                <div class="space-y-4">${parrafos}</div>
+                                ${card.mensajeFinal ? `<div class="bg-white/15 rounded-2xl px-5 py-4 mt-1"><p class="text-lg font-poppins font-bold text-white leading-snug">${card.mensajeFinal}</p></div>` : ''}
+                            </div>
                         </div>
                     </div>`;
             }
@@ -631,10 +643,10 @@
             if (quizIndice >= preguntasQuiz.length) {
                 const r = resultadosQuiz.find(x => quizPuntos >= x.min && quizPuntos <= x.max);
                 return `
-                    <div class="w-full h-full ${c.bg} rounded-3xl relative overflow-hidden flex flex-col justify-center px-8 py-10 shadow-xl">
+                    <div class="w-full h-full ${c.bg} rounded-3xl relative overflow-hidden flex flex-col shadow-xl">
                         <div class="absolute -top-12 -right-12 w-44 h-44 rounded-full ${c.ring1}"></div>
                         <div class="absolute -bottom-16 -left-12 w-52 h-52 rounded-full ${c.ring2}"></div>
-                        <div class="relative z-10 text-center space-y-5">
+                        <div class="relative z-10 flex-grow overflow-y-auto no-scrollbar flex flex-col justify-center px-7 py-8 text-center space-y-5">
                             <div class="text-8xl planta-crece">${r.emoji}</div>
                             <h4 class="text-3xl font-poppins font-extrabold text-white">${r.titulo}</h4>
                             <div class="bg-white/95 rounded-2xl px-6 py-5 tarjeta-revelada">
@@ -650,10 +662,10 @@
 
             // Pregunta en curso
             return `
-                <div class="w-full h-full ${c.bg} rounded-3xl relative overflow-hidden flex flex-col justify-center px-8 py-10 shadow-xl">
+                <div class="w-full h-full ${c.bg} rounded-3xl relative overflow-hidden flex flex-col shadow-xl">
                     <div class="absolute -top-12 -right-12 w-44 h-44 rounded-full ${c.ring1}"></div>
                     <div class="absolute -bottom-16 -left-12 w-52 h-52 rounded-full ${c.ring2}"></div>
-                    <div class="relative z-10 space-y-7 text-center entra-suave">
+                    <div class="relative z-10 flex-grow overflow-y-auto no-scrollbar flex flex-col justify-center px-7 py-8 space-y-6 text-center entra-suave">
                         <div>
                             <span class="text-sm font-poppins font-extrabold text-white/70 uppercase tracking-widest">Pregunta ${quizIndice + 1} de ${preguntasQuiz.length}</span>
                             <div class="flex justify-center gap-1.5 mt-3">
