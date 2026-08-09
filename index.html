@@ -215,19 +215,20 @@
                 </button>
             </div>
 
-            <div class="content-col flex-grow relative flex items-center overflow-hidden mt-1">
-                <button onclick="cambiarTarjeta(-1)" class="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center text-tvn-blue active:scale-90 transition-all">
-                    <i class="fa-solid fa-chevron-left text-sm"></i>
-                </button>
-
+            <div class="content-col flex-grow relative overflow-hidden mt-1">
                 <div id="carrusel-container" class="w-full h-full"></div>
-
-                <button onclick="cambiarTarjeta(1)" class="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center text-tvn-blue active:scale-90 transition-all">
-                    <i class="fa-solid fa-chevron-right text-sm"></i>
-                </button>
             </div>
 
             <div id="carrusel-dots" class="content-col flex justify-center gap-2 pt-4 shrink-0"></div>
+
+            <div class="content-col flex gap-3 pt-3 shrink-0">
+                <button onclick="cambiarTarjeta(-1)" class="flex-1 bg-slate-100 hover:bg-slate-200 text-tvn-dark font-poppins font-bold text-base py-4 rounded-2xl active:scale-95 transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-chevron-left text-sm"></i> Atrás
+                </button>
+                <button onclick="cambiarTarjeta(1)" class="flex-1 bg-tvn-blue hover:bg-tvn-blueDark text-white font-poppins font-bold text-base py-4 rounded-2xl shadow-lg active:scale-95 transition-all flex items-center justify-center gap-2">
+                    Siguiente <i class="fa-solid fa-chevron-right text-sm"></i>
+                </button>
+            </div>
         </section>
 
         <!-- ============ MÓDULO 2: BIENESTAR EN TU DÍA A DÍA ============ -->
@@ -238,19 +239,20 @@
                 </button>
             </div>
 
-            <div class="content-col flex-grow relative flex items-center overflow-hidden mt-1">
-                <button onclick="cambiarTarjeta(-1)" class="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center text-tvn-teal active:scale-90 transition-all">
-                    <i class="fa-solid fa-chevron-left text-sm"></i>
-                </button>
-
+            <div class="content-col flex-grow relative overflow-hidden mt-1">
                 <div id="carrusel-container-2" class="w-full h-full"></div>
-
-                <button onclick="cambiarTarjeta(1)" class="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center text-tvn-teal active:scale-90 transition-all">
-                    <i class="fa-solid fa-chevron-right text-sm"></i>
-                </button>
             </div>
 
             <div id="carrusel-dots-2" class="content-col flex justify-center gap-2 pt-4 shrink-0"></div>
+
+            <div class="content-col flex gap-3 pt-3 shrink-0">
+                <button onclick="cambiarTarjeta(-1)" class="flex-1 bg-slate-100 hover:bg-slate-200 text-tvn-dark font-poppins font-bold text-base py-4 rounded-2xl active:scale-95 transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-chevron-left text-sm"></i> Atrás
+                </button>
+                <button onclick="cambiarTarjeta(1)" class="flex-1 bg-tvn-teal hover:bg-tvn-teal/90 text-white font-poppins font-bold text-base py-4 rounded-2xl shadow-lg active:scale-95 transition-all flex items-center justify-center gap-2">
+                    Siguiente <i class="fa-solid fa-chevron-right text-sm"></i>
+                </button>
+            </div>
         </section>
 
         <!-- ============ PANTALLA DE EVALUACIÓN (3 preguntas) ============ -->
@@ -528,9 +530,14 @@
 
             } else if (card.tipo === 'eleccion') {
                 const ops = card.opciones.map((o, i) => `
-                    <button onclick="elegirOpcion(${i})" class="w-full bg-white/95 hover:bg-white text-left px-5 py-4 rounded-2xl shadow-lg active:scale-95 transition-all">
-                        <span class="block font-poppins font-bold text-lg text-tvn-dark">${o.texto}</span>
-                        <span class="block text-sm text-tvn-muted mt-0.5">${o.detalle}</span>
+                    <button onclick="elegirOpcion(${i})" class="w-full bg-white hover:bg-white text-left pl-5 pr-4 py-4 rounded-2xl shadow-xl active:scale-95 transition-all flex items-center justify-between gap-3 border-2 border-transparent hover:border-white">
+                        <span>
+                            <span class="block font-poppins font-bold text-lg text-tvn-dark">${o.texto}</span>
+                            <span class="block text-sm text-tvn-muted mt-0.5">${o.detalle}</span>
+                        </span>
+                        <span class="w-9 h-9 rounded-full flex items-center justify-center shrink-0" style="background-color:${c.hex}">
+                            <i class="fa-solid fa-chevron-right text-white text-sm"></i>
+                        </span>
                     </button>`).join('');
 
                 html = `
@@ -540,6 +547,7 @@
                             <h4 class="text-2xl font-poppins font-extrabold text-white leading-snug">${card.titulo}</h4>
                             <p class="text-lg text-white/90 leading-relaxed">${card.intro}</p>
                             <p class="text-xl font-poppins font-bold text-white leading-snug pt-1">${card.pregunta}</p>
+                            <p class="text-sm text-white/70 -mt-2">Toca la opción con la que más te identifiques</p>
                             <div id="eleccion-ops" class="space-y-3">${ops}</div>
                             <div id="eleccion-resp" class="hidden">
                                 <div class="bg-white/95 rounded-2xl p-5 flex gap-3 items-start tarjeta-revelada">
@@ -570,6 +578,20 @@
                             ${card.mensajeFinal ? `<div class="bg-white/15 rounded-2xl px-5 py-4 mt-2"><p class="text-lg font-poppins font-bold text-white leading-snug">${card.mensajeFinal}</p></div>` : ''}
                         </div>
                     </div>`;
+            }
+
+            // En la última tarjeta de cada módulo, invitar a dejar su opinión
+            // (así la evaluación no depende solo del botón del menú)
+            const esUltima = indiceActual === data.length - 1;
+            const esQuizSinTerminar = card.tipo === 'quiz' && quizIndice < preguntasQuiz.length;
+            if (esUltima && !esQuizSinTerminar) {
+                html += `
+                    <button onclick="goToScreen('screen-evaluacion')" class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 hover:bg-white text-tvn-dark font-poppins font-bold text-sm px-5 py-2.5 rounded-full shadow-lg active:scale-95 transition-all flex items-center gap-2 whitespace-nowrap">
+                        <i class="fa-solid fa-comment-dots"></i> Cuéntanos tu experiencia
+                    </button>`;
+                cont.classList.add('relative');
+            } else {
+                cont.classList.remove('relative');
             }
 
             cont.innerHTML = html;
@@ -661,17 +683,17 @@
             {
                 clave: "utilidad",
                 texto: "¿Este kit te resultó útil?",
-                opciones: ["Sí, mucho", "Algo", "Poco"]
+                opciones: ["3 — En gran medida", "2 — En parte", "1 — Aún no lo sé"]
             },
             {
                 clave: "aprendizaje",
                 texto: "¿Descubriste algo que no sabías antes?",
-                opciones: ["Sí, varias cosas", "Alguna cosa", "No realmente"]
+                opciones: ["3 — En gran medida", "2 — En parte", "1 — Aún no lo sé"]
             },
             {
                 clave: "aplicacion",
                 texto: "¿Harías algo distinto a partir de lo que viste aquí?",
-                opciones: ["Sí", "Tal vez", "No por ahora"]
+                opciones: ["3 — En gran medida", "2 — En parte", "1 — Aún no lo sé"]
             }
         ];
 
