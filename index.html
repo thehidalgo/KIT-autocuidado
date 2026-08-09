@@ -222,10 +222,10 @@
             <div id="carrusel-dots" class="content-col flex justify-center gap-2 pt-4 shrink-0"></div>
 
             <div class="content-col flex gap-3 pt-3 shrink-0">
-                <button onclick="cambiarTarjeta(-1)" class="flex-1 bg-slate-100 hover:bg-slate-200 text-tvn-dark font-poppins font-bold text-base py-4 rounded-2xl active:scale-95 transition-all flex items-center justify-center gap-2">
+                <button id="btn-atras" onclick="cambiarTarjeta(-1)" class="flex-1 bg-slate-100 hover:bg-slate-200 text-tvn-dark font-poppins font-bold text-base py-4 rounded-2xl active:scale-95 transition-all flex items-center justify-center gap-2">
                     <i class="fa-solid fa-chevron-left text-sm"></i> Atrás
                 </button>
-                <button onclick="cambiarTarjeta(1)" class="flex-1 bg-tvn-blue hover:bg-tvn-blueDark text-white font-poppins font-bold text-base py-4 rounded-2xl shadow-lg active:scale-95 transition-all flex items-center justify-center gap-2">
+                <button id="btn-siguiente" onclick="cambiarTarjeta(1)" class="flex-1 bg-tvn-blue hover:bg-tvn-blueDark text-white font-poppins font-bold text-base py-4 rounded-2xl shadow-lg active:scale-95 transition-all flex items-center justify-center gap-2">
                     Siguiente <i class="fa-solid fa-chevron-right text-sm"></i>
                 </button>
             </div>
@@ -246,10 +246,10 @@
             <div id="carrusel-dots-2" class="content-col flex justify-center gap-2 pt-4 shrink-0"></div>
 
             <div class="content-col flex gap-3 pt-3 shrink-0">
-                <button onclick="cambiarTarjeta(-1)" class="flex-1 bg-slate-100 hover:bg-slate-200 text-tvn-dark font-poppins font-bold text-base py-4 rounded-2xl active:scale-95 transition-all flex items-center justify-center gap-2">
+                <button id="btn-atras-2" onclick="cambiarTarjeta(-1)" class="flex-1 bg-slate-100 hover:bg-slate-200 text-tvn-dark font-poppins font-bold text-base py-4 rounded-2xl active:scale-95 transition-all flex items-center justify-center gap-2">
                     <i class="fa-solid fa-chevron-left text-sm"></i> Atrás
                 </button>
-                <button onclick="cambiarTarjeta(1)" class="flex-1 bg-tvn-teal hover:bg-tvn-teal/90 text-white font-poppins font-bold text-base py-4 rounded-2xl shadow-lg active:scale-95 transition-all flex items-center justify-center gap-2">
+                <button id="btn-siguiente-2" onclick="cambiarTarjeta(1)" class="flex-1 bg-tvn-teal hover:bg-tvn-teal/90 text-white font-poppins font-bold text-base py-4 rounded-2xl shadow-lg active:scale-95 transition-all flex items-center justify-center gap-2">
                     Siguiente <i class="fa-solid fa-chevron-right text-sm"></i>
                 </button>
             </div>
@@ -412,7 +412,7 @@
                 indiceActual = 0;
                 renderTarjeta();
             } else if (screenId === 'screen-evaluacion') {
-                evalIndice = 0;
+                evalIndice = -1;
                 evalRespuestas = {};
                 renderEvaluacion();
             } else if (screenId === 'screen-modulo-habitos') {
@@ -440,9 +440,44 @@
 
         function cambiarTarjeta(dir) {
             const data = datosModulo();
-            indiceActual = (indiceActual + dir + data.length) % data.length;
+            const nuevo = indiceActual + dir;
+
+            // Al pasar de la última tarjeta, el recorrido termina y va a la evaluación
+            if (nuevo >= data.length) {
+                goToScreen('screen-evaluacion');
+                return;
+            }
+            // En la primera, "Atrás" regresa al menú
+            if (nuevo < 0) {
+                goToScreen('screen-selection');
+                return;
+            }
+
+            indiceActual = nuevo;
             if (data[indiceActual].tipo === 'quiz') { quizIndice = 0; quizPuntos = 0; }
             renderTarjeta();
+        }
+
+        // Ajusta el texto del botón según dónde esté la persona en el recorrido
+        function actualizarBotonesNav() {
+            const data = datosModulo();
+            const esUltima = indiceActual === data.length - 1;
+            const sufijo = moduloActivo === 'estres' ? '' : '-2';
+            const btnSig = document.getElementById('btn-siguiente' + sufijo);
+            const btnAtras = document.getElementById('btn-atras' + sufijo);
+            if (!btnSig) return;
+
+            if (esUltima) {
+                btnSig.innerHTML = 'Finalizar <i class="fa-solid fa-circle-check text-sm"></i>';
+            } else {
+                btnSig.innerHTML = 'Siguiente <i class="fa-solid fa-chevron-right text-sm"></i>';
+            }
+
+            if (indiceActual === 0) {
+                btnAtras.innerHTML = '<i class="fa-solid fa-chevron-left text-sm"></i> Menú';
+            } else {
+                btnAtras.innerHTML = '<i class="fa-solid fa-chevron-left text-sm"></i> Atrás';
+            }
         }
 
         // ===================== RENDERIZADO =====================
@@ -580,20 +615,6 @@
                     </div>`;
             }
 
-            // En la última tarjeta de cada módulo, invitar a dejar su opinión
-            // (así la evaluación no depende solo del botón del menú)
-            const esUltima = indiceActual === data.length - 1;
-            const esQuizSinTerminar = card.tipo === 'quiz' && quizIndice < preguntasQuiz.length;
-            if (esUltima && !esQuizSinTerminar) {
-                html += `
-                    <button onclick="goToScreen('screen-evaluacion')" class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 hover:bg-white text-tvn-dark font-poppins font-bold text-sm px-5 py-2.5 rounded-full shadow-lg active:scale-95 transition-all flex items-center gap-2 whitespace-nowrap">
-                        <i class="fa-solid fa-comment-dots"></i> Cuéntanos tu experiencia
-                    </button>`;
-                cont.classList.add('relative');
-            } else {
-                cont.classList.remove('relative');
-            }
-
             cont.innerHTML = html;
 
             // Puntos indicadores
@@ -601,6 +622,8 @@
             dots.innerHTML = data.map((_, i) =>
                 `<span class="h-2 rounded-full transition-all ${i === indiceActual ? 'bg-tvn-blue w-6' : 'bg-slate-200 w-2'}"></span>`
             ).join('');
+
+            actualizarBotonesNav();
         }
 
         function renderQuiz(c) {
@@ -697,11 +720,36 @@
             }
         ];
 
-        let evalIndice = 0;
+        let evalIndice = -1;  // -1 = pantalla de introducción con la explicación de la escala
         let evalRespuestas = {};
 
         function renderEvaluacion() {
             const cont = document.getElementById('eval-container');
+
+            // Pantalla inicial: explica la escala antes de empezar
+            if (evalIndice < 0) {
+                cont.innerHTML = `
+                    <div class="text-center space-y-6 entra-suave">
+                        <div class="text-6xl">\u{1F4AC}</div>
+                        <h3 class="text-3xl font-poppins font-extrabold leading-snug">Cuéntanos tu experiencia</h3>
+                        <p class="text-lg text-white/90 leading-relaxed">
+                            Son 3 preguntas breves. Tus respuestas nos ayudan a mejorar las herramientas de la campaña.
+                        </p>
+                        <div class="bg-white/15 rounded-2xl p-5 text-left space-y-3">
+                            <p class="text-base font-poppins font-bold text-white">Responde según qué tanto aplica para ti:</p>
+                            <div class="space-y-2 text-base text-white/90">
+                                <p><span class="font-bold text-white">3 — En gran medida:</span> sí, claramente.</p>
+                                <p><span class="font-bold text-white">2 — En parte:</span> algo, pero no del todo.</p>
+                                <p><span class="font-bold text-white">1 — Aún no lo sé:</span> todavía no puedo decirlo.</p>
+                            </div>
+                        </div>
+                        <button onclick="comenzarEvaluacion()" class="w-full bg-white text-tvn-blue font-poppins font-bold text-lg py-4 rounded-2xl shadow-lg active:scale-95 transition-all flex items-center justify-center gap-2">
+                            Comenzar <i class="fa-solid fa-chevron-right text-sm"></i>
+                        </button>
+                        <p class="text-sm text-white/70">Tus respuestas son anónimas</p>
+                    </div>`;
+                return;
+            }
 
             if (evalIndice >= preguntasEval.length) {
                 cont.innerHTML = `
@@ -733,9 +781,15 @@
                         </div>
                     </div>
                     <p class="text-2xl font-poppins font-bold leading-snug px-2">${p.texto}</p>
+                    <p class="text-sm text-white/70 -mt-3">3 = en gran medida &nbsp;·&nbsp; 1 = aún no lo sé</p>
                     <div class="space-y-3">${ops}</div>
                     <p class="text-sm text-white/70">Tu respuesta es anónima</p>
                 </div>`;
+        }
+
+        function comenzarEvaluacion() {
+            evalIndice = 0;
+            renderEvaluacion();
         }
 
         function responderEval(clave, i) {
