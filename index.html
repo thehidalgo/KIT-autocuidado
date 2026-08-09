@@ -187,12 +187,11 @@
                         <i class="fa-solid fa-arrow-right text-white/70 group-hover:translate-x-1 transition-all shrink-0 ml-3"></i>
                     </button>
 
-                    <button onclick="goToScreen('screen-modulo-explorar')" class="w-full bg-tvn-coral hover:bg-tvn-coral/90 text-white active:scale-[0.97] p-5 rounded-2xl text-left shadow-lg flex items-center justify-between group transition-all">
-                        <span>
-                            <span class="block font-poppins font-bold text-lg leading-snug">Recursos recomendados</span>
-                            <span class="block text-base text-white/80 font-lato mt-1.5 leading-relaxed">Contenido para seguir explorando temas relacionados con el bienestar y el autocuidado.</span>
-                        </span>
-                        <i class="fa-solid fa-arrow-right text-white/70 group-hover:translate-x-1 transition-all shrink-0 ml-3"></i>
+                </div>
+
+                <div class="content-col shrink-0 pb-4">
+                    <button onclick="goToScreen('screen-evaluacion')" class="w-full bg-white hover:bg-slate-50 text-tvn-teal border-2 border-tvn-teal/30 active:scale-[0.97] py-4 px-5 rounded-2xl font-poppins font-bold text-base shadow-sm flex items-center justify-center gap-2 transition-all">
+                        <i class="fa-solid fa-comment-dots"></i> Cuéntanos tu experiencia
                     </button>
                 </div>
 
@@ -254,63 +253,19 @@
             <div id="carrusel-dots-2" class="content-col flex justify-center gap-2 pt-4 shrink-0"></div>
         </section>
 
-        <!-- ============ MÓDULO 3: RECURSOS RECOMENDADOS ============ -->
-        <section id="screen-modulo-explorar" class="screen flex-grow hidden flex flex-col bg-tvn-coral text-white z-10 overflow-hidden relative">
+        <!-- ============ PANTALLA DE EVALUACIÓN (3 preguntas) ============ -->
+        <section id="screen-evaluacion" class="screen flex-grow hidden flex flex-col bg-tvn-blue text-white z-10 overflow-hidden relative">
             <div class="absolute -top-20 -right-16 w-64 h-64 rounded-full bg-white/10"></div>
-            <div class="absolute -bottom-24 -left-20 w-72 h-72 rounded-full bg-tvn-blueDark/15"></div>
+            <div class="absolute -bottom-24 -left-20 w-72 h-72 rounded-full bg-tvn-teal/20"></div>
 
-            <div class="flex-grow overflow-y-auto no-scrollbar p-6 pt-8 pb-6 relative z-10">
-                <div class="content-col">
+            <div class="flex-grow overflow-y-auto no-scrollbar p-6 pt-8 pb-6 relative z-10 flex flex-col">
+                <div class="content-col shrink-0">
                     <button onclick="goToScreen('screen-selection')" class="text-base font-semibold text-white flex items-center gap-2 hover:underline py-2">
                         <i class="fa-solid fa-chevron-left"></i> Volver al menú
                     </button>
                 </div>
 
-                <div class="content-col mt-4 space-y-6">
-                    <div class="text-center">
-                        <h3 class="text-3xl font-poppins font-extrabold leading-snug">Recursos recomendados</h3>
-                        <div class="w-14 h-1 bg-white/40 mx-auto rounded-full mt-3 mb-4"></div>
-                        <p class="text-lg text-white/90 leading-relaxed">
-                            Contenido seleccionado para acompañarte cuando quieras seguir explorando.
-                        </p>
-                    </div>
-
-                    <!-- Categoría 1 -->
-                    <div class="space-y-3">
-                        <h4 class="text-lg font-poppins font-extrabold text-white flex items-center gap-2">
-                            <span class="text-2xl">🌬️</span> Respiración y relajación
-                        </h4>
-                        <a href="#" data-pendiente="spotify-respiracion" class="recurso-link block bg-white/95 hover:bg-white text-tvn-dark p-4 rounded-2xl shadow-lg active:scale-[0.97] transition-all">
-                            <span class="block font-poppins font-bold text-base">Lista en Spotify</span>
-                            <span class="block text-sm text-tvn-muted mt-1">[Enlace pendiente de definir]</span>
-                        </a>
-                        <a href="#" data-pendiente="youtube-respiracion" class="recurso-link block bg-white/95 hover:bg-white text-tvn-dark p-4 rounded-2xl shadow-lg active:scale-[0.97] transition-all">
-                            <span class="block font-poppins font-bold text-base">Video en YouTube</span>
-                            <span class="block text-sm text-tvn-muted mt-1">[Enlace pendiente de definir]</span>
-                        </a>
-                    </div>
-
-                    <!-- Categoría 2 -->
-                    <div class="space-y-3">
-                        <h4 class="text-lg font-poppins font-extrabold text-white flex items-center gap-2">
-                            <span class="text-2xl">🎧</span> Podcast de bienestar
-                        </h4>
-                        <a href="#" data-pendiente="spotify-podcast" class="recurso-link block bg-white/95 hover:bg-white text-tvn-dark p-4 rounded-2xl shadow-lg active:scale-[0.97] transition-all">
-                            <span class="block font-poppins font-bold text-base">Podcast en Spotify</span>
-                            <span class="block text-sm text-tvn-muted mt-1">[Enlace pendiente de definir]</span>
-                        </a>
-                        <a href="#" data-pendiente="youtube-podcast" class="recurso-link block bg-white/95 hover:bg-white text-tvn-dark p-4 rounded-2xl shadow-lg active:scale-[0.97] transition-all">
-                            <span class="block font-poppins font-bold text-base">Canal en YouTube</span>
-                            <span class="block text-sm text-tvn-muted mt-1">[Enlace pendiente de definir]</span>
-                        </a>
-                    </div>
-
-                    <div class="bg-white/15 rounded-2xl p-4 text-center">
-                        <p class="text-base text-white leading-relaxed">
-                            Estos recursos se mantienen actualizados por sus creadores, así que siempre encontrarás contenido nuevo.
-                        </p>
-                    </div>
-                </div>
+                <div id="eval-container" class="content-col my-auto"></div>
             </div>
         </section>
 
@@ -387,26 +342,29 @@
                 color: "teal"
             },
             {
-                tipo: "lista",
-                titulo: "Descanso real y descanso digital",
-                intro: "Las pantallas nos distraen por un momento, pero hay formas de descanso que ayudan a recuperar energía de manera distinta.",
-                items: ["Escuchar música", "Dar un paseo corto", "Leer algo que disfrutes", "Conversar con alguien"],
-                mensajeFinal: "No existe una única forma de descansar.",
+                tipo: "eleccion",
+                titulo: "Cada persona descansa distinto",
+                intro: "Lo que a alguien le ayuda a soltar tensión, a otra persona puede no funcionarle. Conocer qué te funciona a ti también es parte del autocuidado.",
+                pregunta: "Cuando estás tenso, ¿qué te ayuda más?",
+                opciones: [
+                    { texto: "Moverme", detalle: "Caminar, estirarme, cambiar de espacio", respuesta: "Descargar la tensión con movimiento le funciona a muchas personas. Reconocerlo es tener una herramienta a la mano." },
+                    { texto: "Desconectar", detalle: "Silencio, estar a solas un rato", respuesta: "Bajar los estímulos ayuda a que la mente recupere claridad. Buscar ese espacio no es aislarse: es recargar." },
+                    { texto: "Hablarlo", detalle: "Compartirlo con alguien de confianza", respuesta: "Poner en palabras lo que sentimos ayuda a ordenarlo. Apoyarse en otros también es una forma de cuidarse." }
+                ],
                 color: "azul"
             },
             {
-                tipo: "lista",
-                titulo: "Preparando la mente para descansar",
-                intro: "A veces el cuerpo está listo para dormir, pero la mente sigue activa. Pequeñas rutinas ayudan a bajar el ritmo.",
-                items: ["Horarios similares, aunque no siempre duermas lo mismo", "Reducir estímulos intensos antes de dormir", "Hacer algo relajante antes de acostarte", "Crear un espacio cómodo para el descanso"],
-                mensajeFinal: "Pequeños cambios mejoran la calidad del descanso con el tiempo.",
+                tipo: "simple",
+                titulo: "Tu cuerpo aprende de la rutina",
+                contenido: "A veces el cuerpo está listo para dormir, pero la mente sigue activa.\n\nMantener horarios similares ayuda a que tu cuerpo anticipe el descanso, aunque algunos días duermas menos que otros.",
+                mensajeFinal: "La constancia importa tanto como la cantidad.",
                 color: "coral"
             },
             {
                 tipo: "simple",
-                titulo: "El bienestar también necesita pausas",
-                contenido: "A veces asociamos el autocuidado con actividades que requieren mucho tiempo.\n\nUna pausa puede ser tan simple como estirarse, respirar profundo o cambiar de actividad.",
-                mensajeFinal: "Las pausas no tienen que ser largas para ser valiosas.",
+                titulo: "Las pausas no son tiempo perdido",
+                contenido: "Muchas veces no tomamos pausas porque sentimos que estamos dejando de producir.\n\nPero el cansancio acumulado también afecta la calidad de lo que hacemos.",
+                mensajeFinal: "Una pausa breve puede ser más útil que forzar el ritmo.",
                 color: "azul"
             },
             {
@@ -451,6 +409,10 @@
                 moduloActivo = 'estres';
                 indiceActual = 0;
                 renderTarjeta();
+            } else if (screenId === 'screen-evaluacion') {
+                evalIndice = 0;
+                evalRespuestas = {};
+                renderEvaluacion();
             } else if (screenId === 'screen-modulo-habitos') {
                 moduloActivo = 'bienestar';
                 indiceActual = 0;
@@ -564,6 +526,33 @@
                         </div>
                     </div>`;
 
+            } else if (card.tipo === 'eleccion') {
+                const ops = card.opciones.map((o, i) => `
+                    <button onclick="elegirOpcion(${i})" class="w-full bg-white/95 hover:bg-white text-left px-5 py-4 rounded-2xl shadow-lg active:scale-95 transition-all">
+                        <span class="block font-poppins font-bold text-lg text-tvn-dark">${o.texto}</span>
+                        <span class="block text-sm text-tvn-muted mt-0.5">${o.detalle}</span>
+                    </button>`).join('');
+
+                html = `
+                    <div class="w-full h-full ${c.bg} rounded-3xl relative overflow-hidden flex flex-col px-7 py-8 shadow-xl">
+                        ${decor}
+                        <div class="relative z-10 flex-grow overflow-y-auto no-scrollbar space-y-5">
+                            <h4 class="text-2xl font-poppins font-extrabold text-white leading-snug">${card.titulo}</h4>
+                            <p class="text-lg text-white/90 leading-relaxed">${card.intro}</p>
+                            <p class="text-xl font-poppins font-bold text-white leading-snug pt-1">${card.pregunta}</p>
+                            <div id="eleccion-ops" class="space-y-3">${ops}</div>
+                            <div id="eleccion-resp" class="hidden">
+                                <div class="bg-white/95 rounded-2xl p-5 flex gap-3 items-start tarjeta-revelada">
+                                    <span class="text-3xl shrink-0">\u{1F4A1}</span>
+                                    <p id="eleccion-texto" class="text-base text-tvn-dark leading-relaxed"></p>
+                                </div>
+                                <button onclick="reiniciarEleccion()" class="mt-3 text-base text-white/80 hover:text-white underline">
+                                    Elegir otra opción
+                                </button>
+                            </div>
+                        </div>
+                    </div>`;
+
             } else if (card.tipo === 'quiz') {
                 html = renderQuiz(c);
 
@@ -649,6 +638,103 @@
             quizIndice = 0;
             quizPuntos = 0;
             renderTarjeta();
+        }
+
+        function elegirOpcion(i) {
+            const card = datosModulo()[indiceActual];
+            document.getElementById('eleccion-texto').innerText = card.opciones[i].respuesta;
+            document.getElementById('eleccion-ops').classList.add('hidden');
+            document.getElementById('eleccion-resp').classList.remove('hidden');
+        }
+
+        function reiniciarEleccion() {
+            document.getElementById('eleccion-ops').classList.remove('hidden');
+            document.getElementById('eleccion-resp').classList.add('hidden');
+        }
+
+        // ===================== EVALUACIÓN =====================
+        // NOTA: preguntas provisionales. Se ajustarán cuando esté definido
+        // el objetivo del kit en el trabajo escrito.
+        const FORMSPREE_KIT = "https://formspree.io/f/PENDIENTE";
+
+        const preguntasEval = [
+            {
+                clave: "utilidad",
+                texto: "¿Este kit te resultó útil?",
+                opciones: ["Sí, mucho", "Algo", "Poco"]
+            },
+            {
+                clave: "aprendizaje",
+                texto: "¿Descubriste algo que no sabías antes?",
+                opciones: ["Sí, varias cosas", "Alguna cosa", "No realmente"]
+            },
+            {
+                clave: "aplicacion",
+                texto: "¿Harías algo distinto a partir de lo que viste aquí?",
+                opciones: ["Sí", "Tal vez", "No por ahora"]
+            }
+        ];
+
+        let evalIndice = 0;
+        let evalRespuestas = {};
+
+        function renderEvaluacion() {
+            const cont = document.getElementById('eval-container');
+
+            if (evalIndice >= preguntasEval.length) {
+                cont.innerHTML = `
+                    <div class="text-center space-y-6 entra-suave">
+                        <div class="text-7xl">\u{1F64C}</div>
+                        <h3 class="text-3xl font-poppins font-extrabold">¡Gracias por compartir!</h3>
+                        <p class="text-lg text-white/90 leading-relaxed">
+                            Tu respuesta nos ayuda a seguir mejorando las herramientas de la campaña.
+                        </p>
+                        <button onclick="goToScreen('screen-selection')" class="bg-white text-tvn-blue font-poppins font-bold text-lg px-7 py-4 rounded-2xl shadow-lg active:scale-95 transition-all">
+                            Volver al menú
+                        </button>
+                    </div>`;
+                return;
+            }
+
+            const p = preguntasEval[evalIndice];
+            const ops = p.opciones.map((o, i) => `
+                <button onclick="responderEval('${p.clave}', ${i})" class="w-full bg-white/95 hover:bg-white text-tvn-dark font-poppins font-bold text-lg py-4 rounded-2xl shadow-lg active:scale-95 transition-all">
+                    ${o}
+                </button>`).join('');
+
+            cont.innerHTML = `
+                <div class="space-y-7 text-center entra-suave">
+                    <div>
+                        <span class="text-sm font-poppins font-extrabold text-white/70 uppercase tracking-widest">Pregunta ${evalIndice + 1} de ${preguntasEval.length}</span>
+                        <div class="flex justify-center gap-1.5 mt-3">
+                            ${preguntasEval.map((_, i) => `<span class="h-1.5 rounded-full transition-all ${i <= evalIndice ? 'bg-white w-8' : 'bg-white/30 w-4'}"></span>`).join('')}
+                        </div>
+                    </div>
+                    <p class="text-2xl font-poppins font-bold leading-snug px-2">${p.texto}</p>
+                    <div class="space-y-3">${ops}</div>
+                    <p class="text-sm text-white/70">Tu respuesta es anónima</p>
+                </div>`;
+        }
+
+        function responderEval(clave, i) {
+            evalRespuestas[clave] = preguntasEval[evalIndice].opciones[i];
+            evalIndice++;
+            if (evalIndice >= preguntasEval.length) {
+                enviarEvaluacion();
+            }
+            renderEvaluacion();
+        }
+
+        function enviarEvaluacion() {
+            if (FORMSPREE_KIT.includes('PENDIENTE')) return;
+            const payload = new FormData();
+            payload.append('formulario', 'Kit de Autocuidado');
+            Object.keys(evalRespuestas).forEach(k => payload.append(k, evalRespuestas[k]));
+            fetch(FORMSPREE_KIT, {
+                method: 'POST',
+                body: payload,
+                headers: { 'Accept': 'application/json' }
+            }).catch(err => console.error('No se pudo registrar:', err));
         }
 
         function toggleAcordeon(i) {
