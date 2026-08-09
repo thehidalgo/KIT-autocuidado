@@ -700,7 +700,7 @@
         // ===================== EVALUACIÓN =====================
         // NOTA: preguntas provisionales. Se ajustarán cuando esté definido
         // el objetivo del kit en el trabajo escrito.
-        const FORMSPREE_KIT = "https://formspree.io/f/PENDIENTE";
+        const FORMSPREE_KIT = "https://formspree.io/f/xqpzpprz";
 
         const preguntasEval = [
             {
@@ -752,6 +752,33 @@
             }
 
             if (evalIndice >= preguntasEval.length) {
+                if (evalEnviando) {
+                    cont.innerHTML = `
+                        <div class="text-center space-y-5 entra-suave">
+                            <i class="fa-solid fa-spinner fa-spin text-4xl text-white"></i>
+                            <p class="text-lg text-white/90">Registrando tu respuesta...</p>
+                        </div>`;
+                    return;
+                }
+
+                if (evalError) {
+                    cont.innerHTML = `
+                        <div class="text-center space-y-6 entra-suave">
+                            <div class="text-6xl">\u{1F4E1}</div>
+                            <h3 class="text-2xl font-poppins font-extrabold">No pudimos registrar tu respuesta</h3>
+                            <p class="text-lg text-white/90 leading-relaxed">
+                                Revisa tu conexión e inténtalo otra vez.
+                            </p>
+                            <button onclick="enviarEvaluacion(); renderEvaluacion();" class="w-full bg-white text-tvn-blue font-poppins font-bold text-lg py-4 rounded-2xl shadow-lg active:scale-95 transition-all">
+                                Reintentar
+                            </button>
+                            <button onclick="goToScreen('screen-selection')" class="text-base text-white/80 underline">
+                                Volver al menú
+                            </button>
+                        </div>`;
+                    return;
+                }
+
                 cont.innerHTML = `
                     <div class="text-center space-y-6 entra-suave">
                         <div class="text-7xl">\u{1F64C}</div>
@@ -781,7 +808,7 @@
                         </div>
                     </div>
                     <p class="text-2xl font-poppins font-bold leading-snug px-2">${p.texto}</p>
-                    <p class="text-sm text-white/70 -mt-3">3 = en gran medida &nbsp;·&nbsp; 1 = aún no lo sé</p>
+                    <p class="text-sm text-white/70 -mt-3">3 = en gran medida &nbsp;·&nbsp; 2 = en parte &nbsp;·&nbsp; 1 = aún no lo sé</p>
                     <div class="space-y-3">${ops}</div>
                     <p class="text-sm text-white/70">Tu respuesta es anónima</p>
                 </div>`;
@@ -801,16 +828,32 @@
             renderEvaluacion();
         }
 
+        let evalEnviando = false;
+        let evalError = false;
+
         function enviarEvaluacion() {
             if (FORMSPREE_KIT.includes('PENDIENTE')) return;
+            evalEnviando = true;
+            evalError = false;
+
             const payload = new FormData();
             payload.append('formulario', 'Kit de Autocuidado');
             Object.keys(evalRespuestas).forEach(k => payload.append(k, evalRespuestas[k]));
+
             fetch(FORMSPREE_KIT, {
                 method: 'POST',
                 body: payload,
                 headers: { 'Accept': 'application/json' }
-            }).catch(err => console.error('No se pudo registrar:', err));
+            })
+            .then(r => { if (!r.ok) throw new Error('Respuesta no OK'); })
+            .catch(err => {
+                console.error('No se pudo registrar:', err);
+                evalError = true;
+            })
+            .finally(() => {
+                evalEnviando = false;
+                renderEvaluacion();
+            });
         }
 
         function toggleAcordeon(i) {
